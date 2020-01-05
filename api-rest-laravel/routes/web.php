@@ -19,6 +19,15 @@ Route::get('/animals', 'TestingController@index');
 Route::get('/orm', 'TestingController@testORM');
 
 //API  ROUTES
+    
+    /*HTTP METHODS
+
+        GET: Consigue datos o recursos 
+        POST: Guarda datos o recursos o hacer logica desde un formulario
+        PUT: Actualizar datos o recursos 
+        DELETE: Eliminar datos o recursos 
+
+    */
 
     //TESTING ROUTES
     Route::get('/user/test', 'UserController@test');
