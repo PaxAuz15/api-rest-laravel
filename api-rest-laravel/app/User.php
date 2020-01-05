@@ -37,7 +37,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    //Relacion de uno a muchos
+    //Relacion de uno a muchos. Un usuario tiene muchos posts 
     public function posts(){
         return $this->hasMany('App\Post');
     }

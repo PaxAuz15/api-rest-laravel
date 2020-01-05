@@ -15,6 +15,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/animals', 'TestingController@index');
+Route::get('/orm', 'TestingController@testORM');
+
 //API  ROUTES
 
     //TESTING ROUTES
