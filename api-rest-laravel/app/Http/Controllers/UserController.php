@@ -98,6 +98,41 @@ class UserController extends Controller
 
     public function login(Request $request){
 
+        //RECIBIR DATOS POR post
+        $json = $request->input('json', null);
+        $params = json_decode($json);
+        $params_array = json_decode($json, true);
+
+        //VALIDAR ESOS DATOS
+        $validate = \Validator::make($params_array, [
+            'email' => 'required|email',  
+            'password' => 'required'
+        ]);
+
+        if($validate->fails()){
+
+            $data = array(
+                'status'  => 'error',
+                'code'    => 404,
+                'message' => 'El usuario no se ha podido identificar',
+                'errors' => $validate->errors()
+            );
+    
+            
+        }else{
+
+            //CIFRAR LA PASSWORD 
+            $pwd = hash('sha256', $params->password);
+
+            //DEVOLVER TOKEN O DATOS
+            $signup = $jwtAuth->signup($params->email, $pwd);
+            if(!empty($params->getToken)){
+                $signup = $jwtAuth->signup($params->email, $pwd, true);
+
+            }
+        }
+        
+
         $jwtAuth = new \JwtAuth();
         
         $email = 'luis@luis.com';
