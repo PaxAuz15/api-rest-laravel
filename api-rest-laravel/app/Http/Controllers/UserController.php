@@ -59,8 +59,8 @@ class UserController extends Controller
             }else{//VALIDACION CORRECTA
 
                 //CIFRAR PASSWORD 
-                $pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost'=>4]); //cost indica la cantidad de cifrados aplicados
-
+                //$pwd = password_hash($params->password, PASSWORD_BCRYPT, ['cost'=>4]); //cost indica la cantidad de cifrados aplicados
+                $pwd = hash('sha256', $params->password);
 
                 //COMPROBAR SI EL USUARIO EXISTE (DUPLICADO) --SE ENCUENTRA EN LA SECCION DE VALIDACION DE DATOS unique:users 
 
@@ -97,6 +97,15 @@ class UserController extends Controller
     }
 
     public function login(Request $request){
-        return "Login action to user";
+
+        $jwtAuth = new \JwtAuth();
+        
+        $email = 'luis@luis.com';
+        $password = 'karitu15';
+        //$pwd = password_hash($password, PASSWORD_BCRYPT, ['cost'=>4]); 
+        $pwd = hash('sha256', $password);
+        //var_dump($pwd); die();
+
+        return response()->json($jwtAuth->signup($email, $pwd, true));
     }
 }
